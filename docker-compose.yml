@@ -1,0 +1,25 @@
+services:
+  tagextractor:
+    build: .
+    container_name: tagextractor
+    ports:
+      - 8080:8080
+    depends_on:
+      tagextractor-db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://xxx:yyy@tagextractor-db:5432/tagextractor
+
+  tagextractor-db:
+    image: postgres:15
+    container_name: tagextractor-db
+    environment:
+      - POSTGRES_DB=tagextractor
+      - POSTGRES_USER=xxx
+      - POSTGRES_PASSWORD=yyy
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
+      interval: 1s
+      timeout: 1s
+      retries: 5
+      start_period: 1s
