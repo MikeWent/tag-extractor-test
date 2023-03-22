@@ -24,7 +24,7 @@ async def create_parse_task(
 
 
 @app.get("/task/{task_id}", responses={200: {"model": dto.ParseTask}, 404: {}})
-async def get_task(
+async def get_parse_task(
     task_id: int,
     parse_task_service: services.ParseTaskService = Depends(),
 ) -> dto.ParseTask:
