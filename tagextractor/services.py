@@ -1,8 +1,7 @@
 from fastapi import Depends, HTTPException, status
 from sqlalchemy import select
 
-from tagextractor import dto
-from tagextractor import models
+from tagextractor import dto, models
 from tagextractor.db import AsyncSession, get_session
 
 

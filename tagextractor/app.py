@@ -1,7 +1,6 @@
 from fastapi import Depends, FastAPI
 
-from tagextractor import services
-from tagextractor import dto
+from tagextractor import dto, services
 from tagextractor.db import init_db
 
 app = FastAPI(title="tag-extractor", version="0.1")
