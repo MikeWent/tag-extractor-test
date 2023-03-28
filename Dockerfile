@@ -1,11 +1,16 @@
 FROM python:3.11
 
-COPY tagextractor           /opt/tagextractor
-COPY requirements.txt       /opt/
-COPY uvicorn-logging.yml    /opt/
+RUN adduser app
 
+COPY project            /opt/project
+COPY alembic            /opt/alembic
+
+COPY alembic.ini        /opt/
+COPY uvicorn-log.yml    /opt/
+COPY requirements.txt   /opt/
+
+USER app
 WORKDIR /opt
-RUN --mount=type=cache,target=/root/.cache \
-    pip3 install --upgrade -r requirements.txt
 
-CMD ["uvicorn", "tagextractor.app:app", "--log-config", "uvicorn-logging.yml", "--host", "0.0.0.0", "--port", "8080"]
+RUN --mount=type=cache,target=/home/app/.cache \
+    pip3 install --upgrade --user -r requirements.txt

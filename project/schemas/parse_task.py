@@ -25,6 +25,12 @@ class ParseTaskCreate(BaseModel):
     url: AnyHttpUrl
 
 
+class ParseTaskUpdate(BaseModel):
+    status: TaskStatus | None
+    tags: dict[str, int] | None
+    scripts: list[str] | None
+
+
 class ParseTaskCreated(BaseModel):
     id: int
 

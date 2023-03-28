@@ -1,7 +1,10 @@
-asyncpg
+alembic
+bs4
+celery
 fastapi
+psycopg2
 pydantic
-pytest
+pyyaml
+requests
 sqlalchemy<2
 uvicorn
-pyyaml

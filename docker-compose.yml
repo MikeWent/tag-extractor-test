@@ -1,25 +1,40 @@
 services:
-  tagextractor:
+  api:
+    container_name: api
+    image: project
     build: .
-    container_name: tagextractor
+    command: python3 -m uvicorn project.api:app --log-config uvicorn-log.yml --host 0.0.0.0 --port 8080
     ports:
       - 8080:8080
     depends_on:
-      tagextractor-db:
+      db:
         condition: service_healthy
-    environment:
-      - DATABASE_URL=postgresql+asyncpg://xxx:yyy@tagextractor-db:5432/tagextractor
+    env_file:
+      - .env
+  
+  worker:
+    container_name: worker
+    image: project
+    command: python3 -m celery -A project.worker:celery_app
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+  
 
-  tagextractor-db:
+  db:
     image: postgres:15
-    container_name: tagextractor-db
-    environment:
-      - POSTGRES_DB=tagextractor
-      - POSTGRES_USER=xxx
-      - POSTGRES_PASSWORD=yyy
+    container_name: db
+    env_file:
+      - .env
     healthcheck:
       test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
       interval: 1s
       timeout: 1s
       retries: 5
       start_period: 1s
+
+  redis:
+    container_name: redis
+    image: redis:7

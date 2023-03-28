@@ -1,10 +1,9 @@
 import enum
 
 from sqlalchemy import Column, Enum, Integer, String
-from sqlalchemy.dialects.postgresql import ARRAY, JSON
-from sqlalchemy.orm import declarative_base
 
-Base = declarative_base()
+from sqlalchemy.dialects.postgresql import ARRAY, JSON
+from project.models.base import Base
 
 
 class ParseTask(Base):
