@@ -7,6 +7,7 @@ class TaskStatus(str, enum.Enum):
     NEW = "new"
     PROCESSING = "processing"
     FINISHED = "finished"
+    FAILED = "failed"
 
 
 class ParseTask(BaseModel):

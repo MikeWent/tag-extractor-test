@@ -1,6 +1,6 @@
 alembic
 bs4
-celery
+celery[redis]
 fastapi
 psycopg2
 pydantic

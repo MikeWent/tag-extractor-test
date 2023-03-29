@@ -11,17 +11,17 @@ class ParseTaskInterface(
         schemas.parse_task.ParseTaskUpdate,
     ]
 ):
-    def get_by_url(self, db: Session, url: str) -> models.ParseTask:
+    def get_by_url(self, db: Session, *, url: str) -> models.ParseTask:
         return db.query(self.model).filter(self.model.url == url).one()
 
-    def does_same_url_unfinished_exist(self, db: Session, url: str) -> bool:
+    def does_same_url_unfinished_exist(self, db: Session, *, url: str) -> bool:
         if (
             db.query(self.model)
             .filter(
                 self.model.url == url,
                 self.model.status == self.model.TaskStatus.NEW,
             )
-            .one()
+            .one_or_none()
         ):
             return True
         return False

@@ -15,7 +15,7 @@ services:
   worker:
     container_name: worker
     image: project
-    command: python3 -m celery -A project.worker:celery_app
+    command: python3 -m celery -A project.tasks.celery_app:celery_app worker
     depends_on:
       db:
         condition: service_healthy

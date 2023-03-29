@@ -3,7 +3,7 @@ import enum
 from sqlalchemy import Column, Enum, Integer, String
 
 from sqlalchemy.dialects.postgresql import ARRAY, JSON
-from project.models.base import Base
+from project.models.base_class import Base
 
 
 class ParseTask(Base):
@@ -19,5 +19,6 @@ class ParseTask(Base):
         NEW = "new"
         PROCESSING = "processing"
         FINISHED = "finished"
+        FAILED = "failed"
 
     status = Column(Enum(TaskStatus), default=TaskStatus.NEW)
