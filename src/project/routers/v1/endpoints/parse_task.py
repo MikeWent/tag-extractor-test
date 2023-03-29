@@ -8,7 +8,7 @@ router = APIRouter(prefix="/parse_tasks")
 
 
 @router.post(
-    "/parse_page",
+    "/",
     responses={201: {"model": schemas.parse_task.ParseTaskCreated}, 403: {}, 404: {}},
     status_code=201,
 )
