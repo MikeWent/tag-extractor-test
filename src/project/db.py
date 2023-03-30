@@ -1,4 +1,7 @@
 import subprocess
+import asyncio
+import logging
+
 from os import getenv
 
 from sqlalchemy import select
@@ -13,6 +16,7 @@ async_session = sessionmaker(
 
 
 async def dispose_db():
+    logging.info("disposing db...")
     await engine.dispose()
 
 
@@ -27,5 +31,5 @@ async def get_db():
 async def init_db():
     async with async_session() as session:
         await session.execute(select(1))
-    # perform migrations
-    subprocess.run(["python3", "-m", "alembic", "upgrade", "head"])
+    process = await asyncio.create_subprocess_shell("python3 -m alembic upgrade head")
+    await process.wait()

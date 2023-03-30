@@ -1,7 +1,7 @@
 import subprocess
+import logging
 
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
 
 from project import routers
 from project.db import init_db, dispose_db
@@ -10,8 +10,11 @@ app = FastAPI(title="tag-extractor", version="1.1")
 app.include_router(routers.v1.router, prefix="/v1")
 
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
+@app.on_event("startup")
+async def startup():
     await init_db()
-    yield
+
+
+@app.on_event("shutdown")
+async def shutdown():
     await dispose_db()
