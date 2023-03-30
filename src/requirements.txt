@@ -1,5 +1,6 @@
 alembic
 asyncpg
+bs4
 fastapi
 httpx
 psycopg2

@@ -1,7 +1,7 @@
 from sqlalchemy import select
 
+from project import exceptions, models, schemas
 from project.services.base import CRUDBase
-from project import models, schemas, exceptions
 
 
 class ParseTaskService(

@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from project import schemas, services, tasks
+from project import schemas, services, tasks, models
 from project.db import get_db
 
 router = APIRouter(prefix="/parse_tasks")
@@ -13,11 +13,13 @@ router = APIRouter(prefix="/parse_tasks")
     status_code=201,
 )
 async def create_parse_task(
-    new_task: schemas.parse_task.ParseTaskCreate, db: AsyncSession = Depends(get_db)
+    new_task: schemas.parse_task.ParseTaskCreate,
+    background_tasks: BackgroundTasks,
+    db: AsyncSession = Depends(get_db),
 ):
     await services.ParseTaskService(db=db).check_unfinished_same_url(url=new_task.url)
     created_task = await services.ParseTaskService(db=db).create(obj_in=new_task)
-    # tasks.parse_task.delay(parse_task_id=created_task.id)
+    background_tasks.add_task(tasks.parse_task, db_task=created_task, db=db)
     return created_task
 
 
