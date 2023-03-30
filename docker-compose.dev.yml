@@ -4,8 +4,4 @@ services:
       - type: bind
         source: ./src
         target: /opt
-  worker:
-    volumes:
-      - type: bind
-        source: ./src
-        target: /opt
+
