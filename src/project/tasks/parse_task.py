@@ -1,7 +1,6 @@
 import asyncio
 import logging
 from collections import Counter
-from typing import Union
 
 import httpx
 from bs4 import BeautifulSoup

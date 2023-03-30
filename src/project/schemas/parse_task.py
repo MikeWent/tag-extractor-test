@@ -1,5 +1,3 @@
-import enum
-
 from pydantic import AnyHttpUrl, BaseModel, Field
 
 from project import models

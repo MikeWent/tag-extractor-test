@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from project import schemas, services, tasks, models
+from project import schemas, services, tasks
 from project.db import get_db
 
 router = APIRouter(prefix="/parse_tasks")

@@ -1,4 +1,3 @@
-import sqlalchemy
 from typing import Any, Dict, Generic, List, Type, TypeVar, Union
 
 from fastapi.encoders import jsonable_encoder
@@ -6,8 +5,8 @@ from pydantic import BaseModel
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from project.models.base_class import Base
 from project.exceptions.common import NotFoundException
+from project.models.base_class import Base
 
 ModelType = TypeVar("ModelType", bound=Base)
 CreateSchemaType = TypeVar("CreateSchemaType", bound=BaseModel)
