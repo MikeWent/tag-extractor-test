@@ -1,19 +1,14 @@
 import enum
 
-from pydantic import AnyHttpUrl, BaseModel
+from pydantic import AnyHttpUrl, BaseModel, Field
 
-
-class TaskStatus(str, enum.Enum):
-    NEW = "new"
-    PROCESSING = "processing"
-    FINISHED = "finished"
-    FAILED = "failed"
+from project import models
 
 
 class ParseTask(BaseModel):
     id: int
     url: str
-    status: TaskStatus
+    status: models.ParseTask.TaskStatus
 
     tags: dict[str, int] | None = {}
     scripts: list[str] | None = []
@@ -27,9 +22,9 @@ class ParseTaskCreate(BaseModel):
 
 
 class ParseTaskUpdate(BaseModel):
-    status: TaskStatus | None
-    tags: dict[str, int] | None
-    scripts: list[str] | None
+    status: models.ParseTask.TaskStatus | None = Field(default=None)
+    tags: dict[str, int] | None = Field(default=None)
+    scripts: list[str] | None = Field(default=None)
 
 
 class ParseTaskCreated(BaseModel):
