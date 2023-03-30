@@ -1,1 +1,1 @@
-from .parse_task import parse_task
+from .parse_task import ParseTaskService  # noqa
