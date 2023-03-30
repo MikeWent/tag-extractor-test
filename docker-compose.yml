@@ -11,17 +11,6 @@ services:
         condition: service_healthy
     env_file:
       - .env
-  
-  worker:
-    container_name: worker
-    image: project
-    command: python3 -m celery -A project.tasks.celery_app:celery_app worker
-    depends_on:
-      db:
-        condition: service_healthy
-    env_file:
-      - .env
-  
 
   db:
     image: postgres:15
@@ -34,7 +23,3 @@ services:
       timeout: 1s
       retries: 10
       start_period: 1s
-
-  redis:
-    container_name: redis
-    image: redis:7
